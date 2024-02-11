@@ -1,0 +1,79 @@
+CODE WITH STEIN - CRM (Youtube)
+
+1. Create virtual environment, install django and create project (DONE)
+
+2. (DONE) Base pages / templates 
+    - create app for pages (DONE)
+    - create base template (DONE)
+    - create front page (DONE)
+    - create about page (DONE)
+
+3. (DONE) Authentication
+    - create database model for userprofiles (DONE)
+    - Make it possible to sign up (DONE)
+    - Make it possible to login (DONE)
+    - Make it possible to logout (DONE)
+
+4. (DONE) Simple dashboard
+- Create new leads
+    - New django app (DONE)
+    - Database models (DONE)
+    - Views/ Forms for leads (DONE)
+    - List out leads (DONE)
+    - Views detail page of leads (DONE)
+ 
+5. (DONE) Change and delete leads  
+
+6.  (DONE) Convert leads to clients 
+    - Create Client database models - almosts like lead (DONE)
+    - add a column "convert_to_client" in lead database model (DONE)
+    - create a function "convert_to-client" in lead/views to make it work (DONE)
+    - show a list of clients (DONE)
+    - show a detail page of a client (DONE)
+    - Add a client directly (DONE)
+
+7. Change and delete clients (DONE)
+
+8. (DONE) Implement solution for teams
+    - Create teams app (DONE)
+    - Model for teams (DONE)
+    - When you create a lead, make sure team is set (DONE)
+    - When you create a client, make sure team is set (DONE)
+    - If you're not a membre of a team, create one (DONE)
+    - if you're the owner, make it possible to edit (DONE)
+    - Limit number of leads (DONE)
+    - Limit number f clients (DONE)
+
+    - Create new teams
+    - You need to be a member of a team
+
+9. (DONE) Refactoring
+    - install Tailwind instead of using CDN (DONE)
+    - Add name spaces to all of the apps (DONE)
+    - Replace the leads list with a class based view (DONE)
+    - Replace the leads detail with a class based view (DONE)
+    - Replace the leads delete with a class based view (DONE)
+    - Replace the leads edit with a class based view (DONE)
+    - Replace the leads add with a class based view (DONE)
+        - And give it a better name (DONE)
+    - Replace the leads convert with a class base view (DONE)
+
+10. (DONE) Add comments and similar to leads and clients & convert lead comments to client comments
+
+11. (DONE) Upload files to leads and clients
+
+12. (DONE)Export informations (lead, clients)
+
+13. Show active team in menu (DONE)
+
+14. Team detail page with member list (DONE)
+
+15. Clean up base.html with includes (DONE)
+
+16. Fix styling fo login and signup (DONE)
+
+13. Communicate with eachother?
+    
+14. implement a payment solution / monthly reccuring payments (Dj-Stripe)
+
+15. Deploy

@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+
+{% block title %}My account| Pop CRM{% endblock %}
+
+{% block content %}
+    <div class="py-4 px-4 ">
+        <h1  class="text-lg py-4 "> <span style="font-weight: bold; text-transform: uppercase;">Mon compte</span></h1>
+
+        <p class="mb-2">
+            <strong>Utilisateur:</strong> {{ request.user.username}}
+        </p>
+
+        <p class="mb-2">
+
+            {% if active_team %}
+
+                <strong>Equipe:</strong><a href="{% url 'team:detail' active_team.id %}"> {{active_team.name}}</a>
+                <!-- if you're the owner, make it possible to edit -->
+                {% if active_team.created_by == request.user %}
+                    <a href="{% url 'team:edit' active_team.id %}" class="py-1 px-3 bg-blue-900 text-white rounded-xl">Modifier</a>
+                {% endif %}
+
+            {% else %}
+                <a href="{% url 'team:list' %}">Selectionnez la team</a>
+            {% endif %}
+
+        </p>
+
+        <hr class="mb-4">
+
+        <a href="{% url 'userprofile:logout' %}" class="text-red-400 py-2 px-6  rounded-xl"> <span style=" font-weight: bold;">Logout</span><i class="fa fa-exit"></i></a>
+    </div>
+{% endblock %}

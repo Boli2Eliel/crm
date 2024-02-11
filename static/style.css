@@ -1,0 +1,27 @@
+.export-csv {
+    float: left; 
+    margin: 0 7px 0 0;
+    padding: 1px 8px 6px 8px ;
+    background: #cd470e;
+    border-radius: 6px;
+}
+
+.export-csv a {
+    font-size: 12px; 
+    font-weight: bold;
+    color: white;
+}
+
+.export-xls {
+    float: right; 
+    margin: 0 7px 0 0;
+    padding: 1px 8px 6px 8px ;
+    background: green;
+    border-radius: 6px;
+}
+
+.export-xls a {
+    font-size: 12px; 
+    font-weight: bold;
+    color: white;
+}

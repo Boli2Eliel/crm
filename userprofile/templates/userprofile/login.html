@@ -1,0 +1,104 @@
+
+{% extends "core/base1.html" %}
+{% load static %}
+{% load tailwind_filters %}
+
+{% block title %}Login | Pop CRM{% endblock %}
+
+{% block content %}
+<!--section class="bg-gray-50 dark:bg-gray-900">
+    
+    <h1  class="text-lg py-4 "> <span style="font-weight: bold; text-transform: uppercase;">Connexion</span></h1>
+    <form action="." method="post" class="py-4 px-4">
+        {% csrf_token %}
+
+        {{ form.as_p}}
+
+        <button class="py-3 px-5 bg-blue-900 text-white rounded-xl">Envoyer</button>
+    </form>
+</!--section-->
+
+
+
+<section class="h-screen">
+
+    <div class="h-full">
+        <!-- Left column container with background-->
+        <div class="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
+            
+            <div class="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
+
+                <img src="{% static 'img/draw2.webp' %}" class="w-full" alt="Sample image" />
+
+            </div>
+
+            <!-- Right column container -->
+            <div class="mb-6 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12 mt-1 " >
+
+                <form action="." method="post" class="py-4 px-4">
+                        {% csrf_token %}
+
+                    <!--Sign in section-->
+                    <div
+                        class="flex flex-row items-center justify-center lg:justify-start">
+                        <p class="mb-0 mr-4 text-lg mx-4 mb-0 text-center font-semibold text-indigo-700 "> PopCRM - Connexion</p>
+
+                    </div>
+
+                    <!-- Separator between social media sign in and email/password sign in -->
+                    <div
+                        class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
+                        
+                    </div>
+
+                        <div class=" py-6 px-4 bg-gray-100 " style="border: solid 1px rgba(78, 57, 168, 0.2); border-radius: 6px; font-size: 14px; ">
+
+                            
+                            <!-- Email or username & password input -->
+                            {{ form|crispy }}
+                        
+
+                            <div class="mt-6 flex items-center justify-between">
+                                <!-- Remember me checkbox -->
+                                <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
+
+                                    <input
+                                        class=""
+                                        type="checkbox"
+                                        value=""
+                                        id="exampleCheck2" />
+                                        
+                                    <label class="inline-block pl-[0.15rem] hover:cursor-pointer" for="exampleCheck2" style="font-size: 13px;"> Remember me </label>
+                                </div>
+
+                                <!--Forgot password link-->
+                                <a href="#!" style="font-size: 13px;" class="hover:text-blue-500">Forgot password?</a>
+                            </div>
+
+                            <!-- Login button -->
+                            <div class="text-center lg:text-left mt-6">
+                                <button class=" py-3 px-5 bg-blue-900 text-white rounded-xl">
+                                Connexion
+                                </button>
+
+                                <!-- Register link -->
+                                <p class="mb-0 mt-2 pt-1 text-sm font-semibold" style="font-size: 13px;">
+                               <span class="text-gray-500">Pas de compte?</span> 
+
+                                <a href="{% url 'userprofile:signup' %}" class="text-danger transition duration-150 ease-in-out hover:text-blue-500 focus:text-danger-600 active:text-danger-700" >Créer un compte</a>
+
+                                </p>
+
+                            </div>
+                        </div>
+
+                </form>
+            </div>
+            
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

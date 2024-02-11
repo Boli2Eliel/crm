@@ -1,0 +1,38 @@
+{% extends "core/base.html" %}
+{% load tailwind_filters %}
+
+{% block title %} {{title}} | PopCRM {% endblock %}
+
+{% block content %}
+<section class="text-gray-700 bg-indigo-200 body-font overflow-hidden">
+    <div class="max-w-lg mx-auto bg-white mt-4 mb-6 py-6 px-6 rounded">
+        <a class="hover:text-blue-500" href="{% url 'leads:list' %}">Go back to leads</a>
+        <div class="py-5 border-t border-gray-200">
+            <h1 class="text-4xl text-gray-800">{{title}}</h1>
+        </div>
+
+        <!-- Limit number of leads-->
+        {% comment %}
+        {% if team.plan.max_leads > team.leads.count or title == 'Modification prospect' %}
+        {% endcomment %}
+        <form method="post" class="mt-5">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type='submit' class="w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-md">
+                Submit
+            </button>
+        </form>
+
+        <!--
+        {% comment %}
+        {% else %}
+        <div class="mt-6 px-6 py-4 bg-red-500 rounded-xl text-white">
+            Votre équipe a atteint le nombre maximum des prospects ({{team.leads.all|length}}). Votre top manager doit mettre à jour votre plan! 
+        </div>
+        {% endif %}
+        {% endcomment %}
+        -->
+
+    </div>
+</section>
+{% endblock %}

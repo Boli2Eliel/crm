@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}
+
+{% block title %}Equipes| Pop CRM{% endblock %}
+
+{% block content %}
+    <div class="py-6 px-6">
+        <h1  class="text-xl mb-6" style=""><span style="font-weight: bold; text-transform: uppercase;"> Equipes </span></h1>
+
+        <div class="grid grid-cols-4 gap-4">
+            {% for team in teams %}
+                <div class="{% if team == active_team %} bg-emerald-200 {% else %} bg-gray-200 {% endif %} rounded-xl p-6 justify-between ">
+                    <h2 class="text-xl">{{ team.name }}</h2>
+
+                    {% if team == active_team %}
+                    <a href="{% url 'team:detail' team.id %}" class="text-white btn btn-secondary rounded-xl" style="font-size: ;">Details team </a>
+                    {% else %}
+                    <a href="{% url 'team:activate' team.id %}" class="text-white btn btn-info rounded-xl" style="font-size: ;">Activer la team </a>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+        </div>
+
+        
+    </div>
+{% endblock %}

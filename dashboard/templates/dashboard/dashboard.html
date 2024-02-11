@@ -1,0 +1,240 @@
+{% extends "core/base.html" %}
+
+{% block title %}Dashboard | Pop CRM{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated and user.is_superuser or user.is_authenticated and user.is_staff %}
+<!--############################################ SUPERUSER ##############################################-->
+<section class="text-gray-700 bg-indigo-50 body-font overflow-hidden">
+    <div class="py-2 px-4">
+
+        <div class="container mx-auto flex px-5 py-12 items-center justify-center flex-col">
+            <div class="text-center lg:w-2/3 w-full">
+                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+                    CRM Dashboard
+                </h1>
+            
+                <div class="flex flex-wrap -m-4 text-center">
+                    
+
+                    <div class="p-4 md:w-1/4 sm:w-1/2 w-full ">
+                        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg bg-white">
+                            <a href="{% url 'leads:list_all' %}">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                            </svg>
+                            <h2 class="title-font font-medium text-3xl text-gray-900">{{ total_lead_count_all }}</h2>
+                            <p class="leading-relaxed">Total Prospects</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                        <a href="{% url 'clients:list_all' %}">
+                        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg bg-red-500">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-white w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            <h2 class="title-font font-medium text-3xl text-white">{{ total_client_count_all }}</h2>
+                            <p class="leading-relaxed text-white">Total Clients</p>
+                        </div>
+                        </a> 
+                    </div>
+                 
+
+                    <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg bg-yellow-200">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                            </svg>
+                            <h2 class="title-font font-medium text-3xl text-gray-900">{{ total_leads_in_past30_all }}</h2>
+                            <p class="leading-relaxed text-xs text-bold">Prospects ajoutés les 30 derniers jours</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg bg-green-500">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-white w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            <h2 class="title-font font-medium text-3xl text-white">{{ converted_to_clients_all}}</h2>
+                            <p class="leading-relaxed text-xs text-white">Prospects convertis en clients</p>
+                        </div>
+                    </div>
+
+                    
+                </div>
+                
+            </div>
+        </div>
+
+
+        <hr>
+
+        <div class="flex space-x-4 mt-6">
+
+            <div class="leads w-1/2 px-4 py-4  bg-gray-300 rounded-xl">
+                <h2 class=" mb-3 text-lg">Recents prospects</h2>
+                {% for lead in leads_all %}
+                    <div class="mb-2 lead bg-gray-300 border-b ">
+                        <h5 class="font-bold">{{ lead.firm}}</h5>
+                        <p class="text-xs">Personne contact : {{lead.first_name}} {{lead.name}}</p>
+                        <p class="text-xs">Etat: {{lead.get_status_display }}</p>
+                        <p class="text-xs">Priorité: {{lead.get_priority_display }}</p>
+                        <p class="text-xs">Géré par: {{lead.created_by}}</p>
+
+                        {% if lead.created_by == request.user %}
+                        <a  href="{% url 'leads:detail' lead.id %}" style="text-decoration: underline; font-style: italic; font-size: small;" class="text-white">Details</a>
+                        {% else %}
+
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+
+            <div class="clients w-1/2 px-4 py-4  bg-blue-400 rounded-xl ">
+                <h2 class=" mb-4 text-lg">Recents Clients</h2>
+                {% for client in clients_all %}
+                    <div class="mb-2 client border-b">
+                        <h5 class="font-bold">{{ client.firm}}</h5>
+                        <p class="text-xs">Personne contact : {{client.first_name}} {{client.name}}</p>
+                        <p class="text-xs">Géré par: {{client.created_by}}</p>
+                        {% if client.created_by == request.user %}
+                        <a  href="{% url 'clients:detail' client.id %}" style="text-decoration: underline; font-style: italic; font-size: small;" class="text-white">Details</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        
+
+    </div>
+
+</section>
+
+
+<!--############################################ SUPERUSER ##############################################-->
+{% else %}
+<section class="text-gray-700 bg-indigo-50 body-font overflow-hidden">
+    <div class="py-2 px-4">
+
+        <div class="container mx-auto flex px-5 py-12 items-center justify-center flex-col">
+            <div class="text-center lg:w-2/3 w-full">
+                <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+                    CRM Dashboard
+                </h1>
+            
+                <div class="flex flex-wrap -m-4 text-center">
+                    
+
+                    <div class="p-4 md:w-1/4 sm:w-1/2 w-full ">
+                        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg bg-white">
+                            <a href="{% url 'leads:list' %}">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                            </svg>
+                            <h2 class="title-font font-medium text-3xl text-gray-900">{{ total_lead_count }}</h2>
+                            <p class="leading-relaxed">Prospects</p>
+                            </a>
+                        </div>
+                        <a href="{% url 'leads:list_all' %}" class="text-xs"> Voir prospects du système</a>
+                    </div>
+
+                    <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg bg-red-500">
+                            <a href="{% url 'clients:list' %}">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-white w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                </svg>
+                                <h2 class="title-font font-medium text-3xl text-white">{{ total_client_count }}</h2>
+                                <p class="leading-relaxed text-white">Clients</p>
+                            </a> 
+                        </div>
+                        <a href="{% url 'clients:list_all' %}" class="text-xs"> Voir clients du système</a>
+                        
+                    </div>
+                    
+
+                    <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg bg-yellow-200">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-indigo-500 w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                            </svg>
+                            <h2 class="title-font font-medium text-3xl text-gray-900">{{ total_leads_in_past30 }}</h2>
+                            <p class="leading-relaxed text-xs text-bold">Prospects ajoutés les 30 derniers jours</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
+                        <div class="border-2 border-gray-200 px-4 py-6 rounded-lg bg-green-500">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="text-white w-12 h-12 mb-3 inline-block" viewBox="0 0 24 24">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            <h2 class="title-font font-medium text-3xl text-white">{{ converted_to_clients}}</h2>
+                            <p class="leading-relaxed text-xs text-white">Prospects convertis en clients</p>
+                        </div>
+                    </div>
+
+                    
+                </div>
+                
+            </div>
+        </div>
+
+
+        <hr>
+
+        <div class="flex space-x-4 mt-6">
+
+            <div class="leads w-1/2 px-4 py-4  bg-gray-300 rounded-xl">
+                <h2 class=" mb-3 text-lg">Recents prospects</h2>
+                {% for lead in leads %}
+                    <div class="mb-2 lead bg-gray-300 border-b ">
+                        <h5 class="font-bold">{{ lead.firm}}</h5>
+                        <p class="text-xs">Personne contact : {{lead.first_name}} {{lead.name}}</p>
+                        <p class="text-xs">Etat: {{lead.get_status_display }}</p>
+                        <p class="text-xs">Priorité: {{lead.get_priority_display }}</p>
+
+                        {% if lead.created_by == request.user %}
+                        <a  href="{% url 'leads:detail' lead.id %}" style="text-decoration: underline; font-style: italic; font-size: small;" class="text-white">Details</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+
+            <div class="clients w-1/2 px-4 py-4  bg-blue-400 rounded-xl ">
+                <h2 class=" mb-4 text-lg">Recents Clients</h2>
+                {% for client in clients %}
+                    <div class="mb-2 client border-b">
+                        <h5 class="font-bold">{{ client.firm}}</h5>
+                        <p class="text-xs">Personne contact : {{client.first_name}} {{client.name}}</p>
+                        {% if client.created_by == request.user %}
+                        <a  href="{% url 'clients:detail' client.id %}" style="text-decoration: underline; font-style: italic; font-size: small;" class="text-white">Details</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        
+
+    </div>
+
+</section>
+
+{% endif %}
+{% endblock %}
